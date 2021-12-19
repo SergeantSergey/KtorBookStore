@@ -5,12 +5,12 @@ import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 
-fun Route.book() {
+fun Route.books() {
 
     val dataManager = DataManager()
 
     route("/book") {
-        get {
+        get("/") {
             call.respond(dataManager.addBooks())
         }
 
@@ -18,19 +18,19 @@ fun Route.book() {
             val id = call.parameters["id"]
             val book = call.receive(Book::class)
             val updateBook = dataManager.updateBook(book)
-            call.respond { updateBook }
+            call.respond(updateBook)
         }
 
-        put {
+        put("/") {
             val book = call.receive(Book::class)
             val newBook = dataManager.newBook(book)
-            call.respond { newBook }
+            call.respond(newBook)
         }
 
         delete("/{id}") {
             val id = call.parameters["id"].toString()
             val deleteBook = dataManager.deleteBook(id)
-            call.respond { deleteBook }
+            call.respond(deleteBook)
         }
     }
 }

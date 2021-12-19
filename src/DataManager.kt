@@ -8,7 +8,7 @@ class DataManager {
         return this.bookList.size.toString()
     }
 
-    fun init() {
+    init {
         this.bookList.add(Book(this.gimmeId(), "How to grow apple", "Mr. Appleton", 100.0F))
         this.bookList.add(Book(this.gimmeId(), "How to grow oranges", "Mr. Orangeton", 00.0F))
         this.bookList.add(Book(this.gimmeId(), "How to grow lemon", "Mr. Lemon", 110.0F))
@@ -23,22 +23,22 @@ class DataManager {
         return book
     }
 
-    fun updateBook(book: Book): Book? {
+    fun updateBook(book: Book): Book {
         return this.bookList.find {
             it.id == book.id
         }?.apply {
             title = book.title
             author = book.author
             price = book.price
-        }
+        }!!
     }
 
-    fun deleteBook(id: String): Book? {
+    fun deleteBook(id: String): Book {
         val findBook = this.bookList.find {
             it.id == id
         }
         this.bookList.remove(findBook)
-        return findBook
+        return findBook!!
     }
 
     fun addBooks(): ArrayList<Book> {

@@ -8,7 +8,6 @@ import io.ktor.http.*
 import io.ktor.html.*
 import kotlinx.html.*
 import kotlinx.css.*
-import io.ktor.content.*
 import io.ktor.http.content.*
 import io.ktor.sessions.*
 import io.ktor.features.*
@@ -18,7 +17,6 @@ import io.ktor.gson.*
 import io.ktor.client.*
 import io.ktor.client.engine.apache.*
 import io.ktor.client.features.json.*
-import io.ktor.client.request.*
 import kotlinx.coroutines.*
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
@@ -72,6 +70,8 @@ fun Application.module(testing: Boolean = false) {
     }
 
     routing {
+        books()
+
         get("/") {
             call.respondText("HELLO WORLD!", contentType = ContentType.Text.Plain)
         }
