@@ -1,6 +1,11 @@
 package com.learning
 
+import org.slf4j.LoggerFactory
+import kotlin.reflect.full.declaredMemberProperties
+
 class DataManager {
+
+    private val log = LoggerFactory.getLogger(DataManager::class.java)
 
     var bookList = ArrayList<Book>()
 
@@ -43,5 +48,24 @@ class DataManager {
 
     fun addBooks(): ArrayList<Book> {
         return this.bookList
+    }
+
+    fun sortByBooks(sortBy: String, asc: Boolean): List<Book> {
+        val member = Book::class.declaredMemberProperties.find { it.name == sortBy }
+
+        if (member == null) {
+            log.info("Not exist!")
+            return allBooks()
+        }
+
+        return if (asc) {
+            allBooks().sortedBy { member?.get(it).toString() }
+        } else {
+            allBooks().sortedByDescending { member?.get(it).toString() }
+        }
+    }
+
+    private fun allBooks(): List<Book> {
+        return bookList
     }
 }
